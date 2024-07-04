@@ -122,8 +122,8 @@ def deploy(
     to_path_masks = os.path.join(to_path, "templates", "blend_masks.mp4")
     os.makedirs(os.path.dirname(to_path_masks), exist_ok = True)
 
-    net_config_path = os.path.join(current_path, 'scripts', exp_name, 'config.yaml')
-    net_snapshots_path = os.path.join(current_path, 'results', exp_name, 'snapshots', 'best.pth')
+    net_config_path = os.path.join('/data1/chenlong/online_model_set/lm_train_data', 'scripts', exp_name, 'config.yaml')
+    net_snapshots_path = os.path.join('/data1/chenlong/online_model_set/lm_train_data', 'results', exp_name, 'snapshots', 'best.pth')
 
     with open(net_config_path) as f:
         config = edict(yaml.load(f, Loader = yaml.CLoader))
@@ -152,15 +152,15 @@ def deploy(
     output_onnx = onnx_infer(onnx_model_path, _input, style_space)
     diff = np.abs(output_original.detach().cpu().numpy() - output_onnx)
     logger.info(f"max error {diff.max()}, min error {diff.min()}, avg error {diff.mean()}")
-    gen_file_list, _, _, selected_id = torch.load(os.path.join(current_path, config.data[0].dataset.id_path))
-    landmarks = np.load(os.path.join(current_path, config.data[0].dataset.ldm_path))
+    gen_file_list, _, _, selected_id = torch.load(config.data[0].dataset.id_path)
+    landmarks = np.load(config.data[0].dataset.ldm_path)
     offsets = norm((landmarks - landmarks[selected_id - 1: selected_id, ...])[:, 48:68, ...])
     #np.save(to_path_landmark, landmark)
-    shutil.copy(os.path.join(current_path, config.data[0].dataset.id_landmark_path), to_path_landmark)
+    shutil.copy(config.data[0].dataset.id_landmark_path, to_path_landmark)
 
     logger.info("get style space latents.")
-    attributes = torch.load(os.path.join(current_path, config.attr_path))
-    pose_latents = torch.load(os.path.join(current_path, config.pose_path))
+    attributes = torch.load( config.attr_path)
+    pose_latents = torch.load(config.pose_path)
     n = len(attributes)
     p_bar = tqdm.tqdm(range(n))
     to_save_list = []

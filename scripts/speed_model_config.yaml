@@ -1,0 +1,24 @@
+landmarks_path: "/data1/chenlong/local_code/StyleExpressiveTalkingFace-master/tx_lm2d.npy"
+#landmarks_path: "/data1/chenlong/0517/public_model_lm_train_data/datasets/man3_w_speed_val_6/lm3d_e4e.npy"
+
+net:
+    config: "/data1/chenlong/github/StyleExpressiveTalkingFace/scripts/speed_data/scripts/man3_w_speed_val_6/config.yaml"
+#    weight: "/data1/wanghaoran/Amemori/StyleExpressiveTalkingFace/results/exp072/snapshots/best.pth"
+    weight: "/data1/chenlong/online_model_set/speed_data/results/man3_w_speed_val_6/snapshots/best.pth"
+
+pti:
+    weight: "/data1/chenlong/0517/video/0612/man3_w_speed_val_6/pti/snapshots/"
+
+attr_path: "/data1/chenlong/online_model_set/speed_data/datasets/man3_w_speed_val_6/attribute.pt"
+
+e4e_path: "/data1/chenlong/online_model_set/speed_data/datasets/man3_w_speed_val_6/id.pt"
+
+pose_latent_path: "/data1/chenlong/0517/video/0612/man3_w_speed_val_6/pose"
+
+video_landmark: "/data1/chenlong/online_model_set/speed_data/datasets/man3_w_speed_val_6/lm3d_e4e.npy"
+id_landmark: "/data1/chenlong/online_model_set/speed_data/datasets/man3_w_speed_val_6/id_landmark.npy"
+
+driving_images_dir: "/data1/chenlong/0517/video/0612/smooth/1"
+
+resolution: 1024
+frames: 300

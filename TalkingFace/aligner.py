@@ -639,6 +639,7 @@ def sync_lip_validate(
     logger.info(net._max)
     net.eval()
     resolution = kwargs.get("resolution", 1024)
+    print(resolution)
     decoder = StyleSpaceDecoder(stylegan_path, to_resolution = resolution)
     decoder.load_state_dict(torch.load(pti_weight_path), False)
     decoder.to(device)
