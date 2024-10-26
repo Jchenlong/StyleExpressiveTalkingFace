@@ -16,7 +16,7 @@ gt_smooth=/data1/chenlong/online_model_set/face/${folder_name}/face
 cp -f ${ROOT_PATH}/${exp_name}/cache.pt ${directory}/id.pt
 
 # get face landmark
-python get_landmarks.py --from_path ${gt_smooth}  \
+python get_landmarks_n.py --from_path ${gt_smooth}  \
                         --to_path ${directory}/lm3d.npy
 
 # get id landmark

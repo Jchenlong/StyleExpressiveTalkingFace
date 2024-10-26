@@ -37,6 +37,8 @@ class BaseModel(ABC):
         self.isTrain = opt.isTrain
         self.device = torch.device('cpu') 
         self.save_dir = os.path.join(opt.checkpoints_dir, opt.name)  # save all the checkpoints to save_dir
+        self.save_dir ='/app/lpips/checkpoints/facerecon'  # save all the checkpoints to save_dir
+
         self.loss_names = []
         self.model_names = []
         self.visual_names = []

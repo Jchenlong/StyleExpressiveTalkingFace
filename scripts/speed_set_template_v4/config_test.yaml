@@ -1,4 +1,4 @@
-landmarks_path: "/data1/chenlong/local_code/StyleExpressiveTalkingFace-master/tx_lm2d.npy"
+landmarks_path: "/data1/chenlong/local_code/set/GlintTalkingFaceTrainer/docker/lpips/tx_lm2d.npy"
 
 net:
     config: "%TRAIN_CONFIG_PATH%"
@@ -17,6 +17,7 @@ video_landmark: "%LANDMARK_PATH%"
 id_landmark: "%ID_LANDMARK_PATH%"
 
 driving_images_dir: "%GT_PATH%"
+f_space_path: "%F_SPACE_PATH%"
 
 resolution: 512
 frames: 200

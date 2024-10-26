@@ -3,6 +3,10 @@
 """
 import os 
 import sys
+where_am_i = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, where_am_i)
+sys.path.insert(0, os.path.dirname((where_am_i)))
+
 import cv2
 import yaml
 import torch
@@ -139,7 +143,7 @@ class smooth1d_pytorch(nn.Module):
         return self.filter(y).view(c, self.ksize).permute((1,0))[:n, ...]
 
 class face_parsing:
-    def __init__(self, path = os.path.join(where_am_i, "ExpressiveVideoStyleGanEncoding", "ExpressiveEncoding", "third_party", "models", "79999_iter.pth")):
+    def __init__(self, path = "/app/pretrained_models/79999_iter.pth"):
 
         net = BiSeNet(19) 
         state_dict = torch.load(path)

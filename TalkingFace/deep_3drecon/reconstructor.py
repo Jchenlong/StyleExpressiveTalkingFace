@@ -17,13 +17,15 @@ import pickle as pkl
 from PIL import Image
 
 from utils.commons.tensor_utils import convert_to_tensor, convert_to_np
-with open(f"deep_3drecon/reconstructor_opt.pkl", "rb") as f:
+with open(f"/app/lpips//reconstructor_opt.pkl", "rb") as f:
     opt = pkl.load(f) 
     
 class Reconstructor(nn.Module):
     def __init__(self):
         super().__init__()
         self.model = FaceReconModel(opt)
+        # opt.epoch = '/data1/chenlong/local_code/set/GlintTalkingFaceTrainer/docker/lpips/checkpoints/facerecon/epoch_20.pth'
+        opt.bfm_folder = '/app/lpips/BFM'
         self.model.setup(opt)
         self.model.device = 'cuda:0'
         self.model.parallelize()
