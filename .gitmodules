@@ -1,0 +1,3 @@
+[submodule "TalkingFace/ExpressiveVideoStyleGanEncoding"]
+	path = TalkingFace/ExpressiveVideoStyleGanEncoding
+	url = https://github.com/Jchenlong/expressive_talkinghead_encoding

@@ -43,7 +43,7 @@ from torch.utils.data.distributed import DistributedSampler
 
 current_pwd = os.environ.get("PWD", os.getcwd())
 
-from .get_disentangle_landmarks import DisentangledLandmarks, landmarks_visualization, draw_landmarks, draw_multiple_landmarks
+from TalkingFace.get_disentangle_landmarks import DisentangledLandmarks, landmarks_visualization, draw_landmarks, draw_multiple_landmarks
 where_am_i = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(where_am_i, "ExpressiveVideoStyleGanEncoding"))
 
@@ -51,11 +51,11 @@ from ExpressiveEncoding.train import StyleSpaceDecoder, stylegan_path, from_tens
                                      PoseEdit, get_detector, get_face_info, \
                                      gen_masks, to_tensor, imageio
 
-from .module import BaseLinear, BaseConv2d, Flatten
-from .equivalent_offset import fused_offsetNet
+from TalkingFace.module import BaseLinear, BaseConv2d, Flatten
+from TalkingFace.equivalent_offset import fused_offsetNet
 from ExpressiveEncoding.loss.FaceParsing.model import BiSeNet
 
-from .extra import exclude
+from TalkingFace.extra import exclude
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -641,7 +641,7 @@ class offsetNetV3(offsetNetV2):
             return torch.clip(y * self.z_values[1, ...] + self.z_values[0, ...], self.clip_values[..., 0], self.clip_values[..., 1])
         return y
 
-class offsetNetV4(offsetNetV2):
+class offsetNetV4(offsetNetV3):
     def _build_net(
                    self,
                    in_channels,
@@ -885,9 +885,9 @@ class Dataset:
             for op in self.ops:
                 self.offsets[index] = op(self.offsets[index])
 
-        return attribute, \
+        return attribute.detach(), \
                torch.from_numpy(self.offsets[index]).to(torch.float32), \
-               self.pose[index]
+               attribute.detach()
 
 class ValDataset:
     def __init__(self,
@@ -1043,7 +1043,7 @@ def aligner(
                                 sampler = DistributedSampler(dataset, shuffle = True, rank = rank, num_replicas = world_size, drop_last = True), \
                                )
     else:
-        dataloader = DataLoader(dataset, batch_size = config.batchsize, shuffle = True, num_workers = 8, drop_last = True)
+        dataloader = DataLoader(dataset, batch_size = config.batchsize, shuffle = True, num_workers = 2, drop_last = True)
     training_batchsize = config.batchsize
     dataset_config = config.val
     val_dataset = Dataset(
@@ -1148,8 +1148,10 @@ def aligner(
                 attr = attr.to(device)
                 n = attr.shape[0]
                 offset = offset.to(device)
+                pose = offset.to(device)
+
                 d_loss_value = 0.0
-                pred_attr = net(offset, pose)
+                pred_attr = net(offset)
                 #weight_loss_value = 0
                 #for weight in weights:
                 #    weight = weight.repeat(n, 1, 1)
@@ -1188,7 +1190,7 @@ def aligner(
                 attr = attr.to(device)
                 offset = offset.to(device)
                 with torch.no_grad():
-                    pred_attr = net(offset, pose)
+                    pred_attr = net(offset)
 
                 if isinstance(pred_attr, tuple):
                     pred_attr = pred_attr[0]
@@ -1336,7 +1338,7 @@ def sync_lip_validate(
     if isinstance(landmarks, str):
         landmarks = np.load(landmarks)[...,:2]
     #landmarks[..., 1] = 512 - landmarks[..., 1]
-    landmarks = gaussian_filter1d(landmarks, sigma=1.0, axis=0)
+    # landmarks = gaussian_filter1d(landmarks, sigma=1.0, axis=0)
     # hard code id video landmarks.
     id_landmarks = np.load(os.path.join(current_pwd, config.val.id_landmark_path))
 

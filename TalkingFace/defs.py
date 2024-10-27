@@ -1,4 +1,4 @@
-from .aligner import aligner
+from aligner import aligner
 def kernel(
             rank,
             world_size,
