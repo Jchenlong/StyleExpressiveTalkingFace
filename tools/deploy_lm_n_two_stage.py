@@ -226,7 +226,7 @@ def deploy(
     to_path_masks = os.path.join(to_path, "templates", "blend_masks.mp4")
     os.makedirs(os.path.dirname(to_path_masks), exist_ok = True)
 
-    shutil.copy('/data1/chenlong/github/F/StyleExpressiveTalkingFace/template.yaml', os.path.join(to_path, "config.yaml"))
+    shutil.copy(f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/config.yaml', os.path.join(to_path, "config.yaml"))
 
     net_config_path = os.path.join(current_path, 'scripts', exp_name, 'config.yaml')
     net_snapshots_path = os.path.join(current_path, 'results', exp_name, 'snapshots', 'best.pth')

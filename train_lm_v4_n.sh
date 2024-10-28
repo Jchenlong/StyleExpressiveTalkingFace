@@ -99,7 +99,7 @@ results_path=${file_dirname}/lm_train_n/results/${folder_name}
 mkdir -p ${results_path}
 
 source ${file_dirname}/lm_train_n/scripts/${folder_name}/train.sh ${config_path} ${results_path} ${python_file_path}
-source ${python_file_path}/scripts/infer_chenl_speed_v4.sh ${config_test_path} ${results_path} ${python_file_path}
+#source ${python_file_path}/scripts/infer_chenl_speed_v4.sh ${config_test_path} ${results_path} ${python_file_path}
 
 python ./tools/deploy_lm_n_two_stage.py \
 --exp_name ${folder_name} \
