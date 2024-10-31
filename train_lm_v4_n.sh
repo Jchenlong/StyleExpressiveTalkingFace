@@ -18,37 +18,37 @@ mkdir -p ${directory}
 
 gt_smooth=$2
 # get id.pt
-#cp -f ${ROOT_PATH}/${exp_name}/cache.pt ${directory}/id.pt
-#
-## get face landmark
-#python ${python_file_path}/get_landmarks_n.py --from_path ${gt_smooth}  \
-#                        --to_path ${directory}/lm3d.npy
-#
-##lm3d_dir_path=$(dirname ${gt_smooth})
-##cp -f ${lm3d_dir_path}/lm2d.npy ${directory}/lm3d.npy
-##echo ${lm3d_dir_path}/lm2d.npy
-##cp -f ${directory_ori}/lm3d.npy ${directory}/lm3d.npy
-#
-## get id landmark
-#python ${python_file_path}/get_id_landmarks.py --id_path ${directory}/id.pt \
-#                           --landmark_path ${directory}/lm3d.npy \
-#                           --to_path ${directory}/id_landmark.npy
-## get pose pt
-#python ${python_file_path}/merge_more2one.py ${ROOT_PATH}/${exp_name}/pose ${directory}/pose.pt
-#
-## get attribute pt
-#python ${python_file_path}/merge_more2one.py ${ROOT_PATH}/${exp_name}/expressive ${directory}/attribute.pt
-#
-## get train/val data
-## attribute
-#python ${python_file_path}/tools/get_validate_data.py --from_path ${directory}/attribute.pt \
-#                                  --to_path ${directory}/ \
-#                                  --ratio 0.9
-#
-## landmark
-#python ${python_file_path}/tools/get_validate_data.py --from_path ${directory}/lm3d.npy \
-#                                  --to_path ${directory} \
-#                                  --ratio 0.9
+cp -f ${ROOT_PATH}/${exp_name}/cache.pt ${directory}/id.pt
+
+# get face landmark
+python ${python_file_path}/get_landmarks_n.py --from_path ${gt_smooth}  \
+                        --to_path ${directory}/lm3d.npy
+
+#lm3d_dir_path=$(dirname ${gt_smooth})
+#cp -f ${lm3d_dir_path}/lm2d.npy ${directory}/lm3d.npy
+#echo ${lm3d_dir_path}/lm2d.npy
+#cp -f ${directory_ori}/lm3d.npy ${directory}/lm3d.npy
+
+# get id landmark
+python ${python_file_path}/get_id_landmarks.py --id_path ${directory}/id.pt \
+                           --landmark_path ${directory}/lm3d.npy \
+                           --to_path ${directory}/id_landmark.npy
+# get pose pt
+python ${python_file_path}/merge_more2one.py ${ROOT_PATH}/${exp_name}/pose ${directory}/pose.pt
+
+# get attribute pt
+python ${python_file_path}/merge_more2one.py ${ROOT_PATH}/${exp_name}/expressive ${directory}/attribute.pt
+
+# get train/val data
+# attribute
+python ${python_file_path}/tools/get_validate_data.py --from_path ${directory}/attribute.pt \
+                                  --to_path ${directory}/ \
+                                  --ratio 0.9
+
+# landmark
+python ${python_file_path}/tools/get_validate_data.py --from_path ${directory}/lm3d.npy \
+                                  --to_path ${directory} \
+                                  --ratio 0.9
 ## get training scripts
 mkdir -p ${file_dirname}/lm_train_n/scripts/${folder_name}
 cp -r ${python_file_path}/scripts/speed_set_template_v4/train.sh ${file_dirname}/lm_train_n/scripts/${folder_name}/
@@ -101,11 +101,12 @@ mkdir -p ${results_path}
 source ${file_dirname}/lm_train_n/scripts/${folder_name}/train.sh ${config_path} ${results_path} ${python_file_path}
 #source ${python_file_path}/scripts/infer_chenl_speed_v4.sh ${config_test_path} ${results_path} ${python_file_path}
 
-python ./tools/deploy_lm_n_two_stage.py \
---exp_name ${folder_name} \
---decoder_path ${f_space_decoder_path} \
---to_path ${file_dirname}/lm_train_n \
---image_path  ${gt_smooth} \
---patch 0
+
+#python ./tools/deploy_lm_n_two_stage.py \
+#--exp_name ${folder_name} \
+#--decoder_path ${f_space_decoder_path} \
+#--to_path ${file_dirname}/lm_train_n \
+#--image_path  ${gt_smooth} \
+#--patch 0
 
 

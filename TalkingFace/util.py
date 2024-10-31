@@ -9,7 +9,7 @@ import numpy as np
 DEBUG = os.environ.get("DEBUG", True)
 DEBUG = True if DEBUG in ["True", "TRUE", True, 1] else False
 
-with open(os.path.join("/data1/wanghaoran/Amemori", "template.yaml")) as f:
+with open(os.path.join(f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}', "config.yaml")) as f:
     config = yaml.load(f, Loader = yaml.CLoader)
 
 regions = eval(config["soft_mask_region"])
