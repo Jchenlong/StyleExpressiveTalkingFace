@@ -76,7 +76,7 @@ pose_latent_path=${ROOT_PATH}/${exp_name}/pose
 train_config_path=${file_dirname}/lm_train_n/scripts/${folder_name}/config.yaml
 train_weight_path=${file_dirname}/lm_train_n/results/${folder_name}/snapshots/best.pth
 pti_path=${ROOT_PATH}/${exp_name}/pti_ft_512/snapshots
-f_space_decoder_path=${ROOT_PATH}/${exp_name}/f_space/decoder/snapshots
+f_space_decoder_path=${ROOT_PATH}/${exp_name}/pti_ft_512/snapshots
 video_landmark_path=${directory}/lm3d.npy
 driving_images_dir=${gt_smooth}
 
@@ -99,14 +99,15 @@ results_path=${file_dirname}/lm_train_n/results/${folder_name}
 mkdir -p ${results_path}
 
 source ${file_dirname}/lm_train_n/scripts/${folder_name}/train.sh ${config_path} ${results_path} ${python_file_path}
-#source ${python_file_path}/scripts/infer_chenl_speed_v4.sh ${config_test_path} ${results_path} ${python_file_path}
+source ${python_file_path}/scripts/infer_speed_v4.sh ${config_test_path} ${results_path} ${python_file_path}
+source ${python_file_path}/scripts/infer_speed_v7.sh ${config_test_path} ${results_path} ${python_file_path}
 
 
-#python ./tools/deploy_lm_n_two_stage.py \
-#--exp_name ${folder_name} \
-#--decoder_path ${f_space_decoder_path} \
-#--to_path ${file_dirname}/lm_train_n \
-#--image_path  ${gt_smooth} \
-#--patch 0
+python ./tools/deploy_lm_n_two_stage.py \
+--exp_name ${folder_name} \
+--decoder_path ${f_space_decoder_path} \
+--to_path ${file_dirname}/lm_train_n \
+--image_path  ${gt_smooth} \
+--patch 0
 
 

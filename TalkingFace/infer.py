@@ -2,7 +2,7 @@ import os
 import sys
 import click
 import re
-from .aligner import sync_lip_validate, yaml, edict
+from aligner import sync_lip_validate, yaml, edict
 
 __all__ = ['infer']
  
@@ -23,7 +23,7 @@ def infer(
 
     net_config = config.net.config
     net_weight = config.net.weight
-    video_images_path = config.video_images_path
+    video_images_path = config.driving_images_dir
     
     pti_weight = config.pti.weight
     if not pti_weight.endswith('pt') and not pti_weight.endswith("pth"):

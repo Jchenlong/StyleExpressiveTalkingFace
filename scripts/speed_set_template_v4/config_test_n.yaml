@@ -1,5 +1,5 @@
 #landmarks_path: "/data1/chenlong/local_code/set/GlintTalkingFaceTrainer/docker/lpips/tx_lm2d.npy"
-landmarks_path: "/data1/Dataset/chenlong/tx/tx_lm2d_n.npy"
+landmarks_path: "/app/lpips/tx_lm2d_n.npy"
 
 net:
     config: "%TRAIN_CONFIG_PATH%"

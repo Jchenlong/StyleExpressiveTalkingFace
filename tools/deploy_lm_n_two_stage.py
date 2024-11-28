@@ -207,7 +207,7 @@ def deploy(
     #assert os.path.isdir(to_path), "to_path expected is directory."
     # current_path = '/data1/chenlong/0517/video/0822/S1YRnPRL/S1YRnPRL_exp_set_v4_depoly/lm_train_facial_ft'
     current_path = f'{os.path.dirname(to_path)}/lm_train_n'
-    f_space_path = f'{os.path.dirname(to_path)}/exp/f_space/f_space.pt'
+    f_space_path = f'{os.path.dirname(to_path)}/exp/f_space/f_space_ft.pt'
     # if os.path.exists(current_path):
     #     pass
     # else:
